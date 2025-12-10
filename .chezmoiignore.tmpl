@@ -5,6 +5,9 @@
 .ssh/known_hosts
 .ssh/known_hosts.*
 
+# Repo files that shouldn't deploy to ~/
+README.md
+
 # Exclude work files on non-work machines
 {{ if not .work_machine }}
 .work.sh
