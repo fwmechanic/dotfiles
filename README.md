@@ -31,6 +31,11 @@ chezmoi-managed dotfiles.
 
 4. When prompted "Is this a work machine?" answer accordingly.
 
+5. Start a new login shell (or run `~/.local/bin/chezmoi` if chezmoi isn't in PATH yet):
+   ```bash
+   bash -l
+   ```
+
 ## Day-to-day usage
 
 ```bash
