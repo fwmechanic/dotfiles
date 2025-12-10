@@ -15,6 +15,13 @@ chezmoi-managed dotfiles.
 
 2. Restore `~/.config/chezmoi/key.txt` from password manager
 
+   If restoring from a passphrase-encrypted backup:
+   ```bash
+   mkdir -p ~/.config/chezmoi
+   age -d -o ~/.config/chezmoi/key.txt /path/to/key.txt.age
+   chmod 600 ~/.config/chezmoi/key.txt
+   ```
+
 3. Install chezmoi and apply:
    ```bash
    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply fwmechanic/dotfiles
