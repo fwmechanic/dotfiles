@@ -7,10 +7,12 @@ chezmoi-managed dotfiles.
 1. Install prerequisites:
    ```bash
    # Debian/Ubuntu
-   sudo apt install age git
+   sudo apt install age git curl bash-completion
+   ```
 
+   ```bash
    # Fedora
-   sudo dnf install age git
+   sudo dnf install age git curl bash-completion
    ```
 
 2. Restore `~/.config/chezmoi/key.txt` from password manager

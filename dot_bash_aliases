@@ -10,8 +10,8 @@
 # W: install chocolatey (to install git) https://chocolatey.org/install
 # W: choco feature enable -n=useRememberedArgumentsForUpgrades
 # W: choco install -y git.install --params "/GitAndUnixToolsOnPath /WindowsTerminal /NoCredentialManager /NoAutoCrlf"
-# A: mkdir -p ~/my/repos && cd ~/my/repos && git clone git@github.com:fwmechanic/shell.git
-# W: mkdir -p ~/my/repos && cd ~/my/repos && git clone git@github.com:fwmechanic/winscripts.git
+# A: mkdir -p ~/my/repos && cd ~/my/repos && git clone git@github-fwmechanic:fwmechanic/shell.git
+# W: mkdir -p ~/my/repos && cd ~/my/repos && git clone git@github-fwmechanic:fwmechanic/winscripts.git
 # W: ~/my/repos/winscripts/winupdtuserpath  # to add certain ~/my/... dirs to $PATH
 
 echo "loading ~/.bash_aliases"
