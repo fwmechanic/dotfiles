@@ -4,14 +4,23 @@ chezmoi-managed dotfiles.
 
 ## Bootstrap
 
-1. Restore `~/.config/chezmoi/key.txt` from password manager
+1. Install prerequisites:
+   ```bash
+   # Debian/Ubuntu
+   sudo apt install age git
 
-2. Install chezmoi and apply:
+   # Fedora
+   sudo dnf install age git
+   ```
+
+2. Restore `~/.config/chezmoi/key.txt` from password manager
+
+3. Install chezmoi and apply:
    ```bash
    sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply fwmechanic/dotfiles
    ```
 
-3. When prompted "Is this a work machine?" answer accordingly.
+4. When prompted "Is this a work machine?" answer accordingly.
 
 ## Day-to-day usage
 
