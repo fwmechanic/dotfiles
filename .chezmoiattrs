@@ -1,0 +1,5 @@
+# Ensure SSH directory contents are always private
+.ssh/* private
+
+# Ensure secrets files are always private (backup if you forget --encrypt)
+*secrets* private

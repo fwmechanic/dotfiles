@@ -1,0 +1,7 @@
+.kbackup/
+.rgfiles
+ts_tags*
+tags*
+.env
+.k_edit_*
+output*/

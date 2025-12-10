@@ -1,0 +1,51 @@
+
+# NB: this file is part of the "hgit" repo, which is shared among hosts I use
+# NB: this file is part of the "hgit" repo, which is shared among hosts I use
+# NB: this file is part of the "hgit" repo, which is shared among hosts I use
+
+# host-specific git config should be added to ~/.gitconfig which includes this file!
+# see ~/.bash_aliases for details
+
+[user]
+	email = fwmechanic@gmail.com
+	name = Kevin Goodwin
+
+[core]
+	excludesfile = ~/gitignore_global
+	# fix ^M at end of changed lines in `git diff` output https://stackoverflow.com/a/46265081
+	pager = tr -d '\\r' | less -REX
+
+[push]
+	default = simple
+[pull]
+	rebase = true
+	ff = only
+[merge]
+	conflictstyle = diff3
+	ff = only
+
+[gui]
+	diffopts = -w
+
+[alias]
+	st = status --short --branch
+	stall = status --short --show-stash --ignored
+	co = checkout
+	ci = commit
+	wt = worktree
+	wtl = worktree list
+	br = branch
+	brv = branch -vv
+	indexonly = stash save --keep-index --include-untracked
+	# alias to force-pull *overwrite* (i.e. obliterate local branch instance w/upstream branch); overrides "fatal: Not possible to fast-forward, aborting." condition
+	# https://stackoverflow.com/a/74319682 + https://mirrors.edge.kernel.org/pub/software/scm/git/docs/gitrevisions.html
+	pullover = reset --hard @{upstream}
+	trackedfiles = ls-tree -r HEAD --name-only
+	l1 = "!f() { git log -n ${1:-10} --oneline --decorate --graph; }; f"
+	l1b = "!f() { git log --oneline --decorate --graph "$@"; }; f"
+	log1 = "!f() { git log -n ${1:-10} --oneline --decorate --graph --all; }; f"
+	brt = !git branch -a --format=\"%(committerdate:format:%Y%m%d_%H%M%S) %(refname:short)\" | sort -r
+
+[includeIf "gitdir:~/devicepros/"]
+	path = ~/devicepros/.gitconfig
+	# note this only takes effect if the cwd when executing a git command is within a git repo/worktree!!!

@@ -1,0 +1,12 @@
+# Never manage these
+.bash_history
+.lesshst
+.kbackup/
+.ssh/known_hosts
+.ssh/known_hosts.*
+
+# Exclude work files on non-work machines
+{{ if not .work_machine }}
+.work.sh
+.work_secrets.sh
+{{ end }}
