@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# to bootstrap the repo containing this file, ***as NON-root***:
+# Bootstrap notes (dotfiles managed by chezmoi: see https://github.com/fwmechanic/dotfiles)
 #   Legend:
 # A:all
 # L:Linux
@@ -10,17 +10,6 @@
 # W: install chocolatey (to install git) https://chocolatey.org/install
 # W: choco feature enable -n=useRememberedArgumentsForUpgrades
 # W: choco install -y git.install --params "/GitAndUnixToolsOnPath /WindowsTerminal /NoCredentialManager /NoAutoCrlf"
-# A: copy ~/.ssh/* from another host to gain ssh-keypair
-#    # If you desire on-demand adding of private keys, use IdentityFile and AddKeysToAgent keywords in ~/.ssh/config as shown below.
-#    # Note that for `IdentityFile <pvtkyfnm>`  <pvtkyfnm> MUST specify full path and ~ can be used.
-# L: chmod 600 ~/.ssh/*
-# A: ssh -T git@github.com  # verify ssh to github: you'll need to enter key passphrase; to assist debug, add -v
-#    leave next line UNcommented!
-     hgit() { git --git-dir="$HOME/.git-homedir/" --work-tree="$HOME" "$@" ; }  # leave this line UNcommented!
-# A: cd && git clone --bare git@github.com:fwmechanic/homedir.git .git-homedir && hgit config --local status.showUntrackedFiles no && hgit checkout
-# A: git config --global include.path "$HOME/gitconfig_global"
-#    # Ubuntu (& Windows) MAY not provide a default instance of ~/.bash_aliases
-# A: ( ba='~/.bash_aliases' rc=~/.bashrc ; grep -qFi "$ba" "$rc" || echo 'test -f '"$ba"' && . '"$ba" >> "$rc" )
 # A: mkdir -p ~/my/repos && cd ~/my/repos && git clone git@github.com:fwmechanic/shell.git
 # W: mkdir -p ~/my/repos && cd ~/my/repos && git clone git@github.com:fwmechanic/winscripts.git
 # W: ~/my/repos/winscripts/winupdtuserpath  # to add certain ~/my/... dirs to $PATH
@@ -169,10 +158,8 @@ if ! type __git_complete &> /dev/null; then
 fi
 if type __git_complete &> /dev/null; then
    __git_complete g __git_main                 # ; echo "g    uses git completion by '__git_complete'"
-   __git_complete hgit __git_main              # ; echo "hgit uses git completion by '__git_complete'"
 else # fallback
    complete -o default -o nospace -F _git g    # ; echo "g    uses git completion by 'complete -o ...'"
-   complete -o default -o nospace -F _git hgit # ; echo "hgit uses git completion by 'complete -o ...'"
 fi
 
 
