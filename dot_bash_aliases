@@ -61,6 +61,15 @@ case "$(uname -s)" in
 
    Linux)
       # echo 'Linux'
+      # Source bash-completion early (before code that depends on it)
+      # Some distros source this after .bash_aliases, causing errors
+      if [ -f /usr/share/bash-completion/bash_completion ]; then
+         . /usr/share/bash-completion/bash_completion
+      elif [ -f /etc/bash_completion ]; then
+         . /etc/bash_completion
+      else
+         echo "bash-completion not found; install with: sudo apt install bash-completion"
+      fi
       export SCANS=/mnt/remote/private_rw/scans
       catpath ~/my/repos/k_edit  # [ -d ~/my/repos/k_edit ]   && PATH=$PATH:~/my/repos/k_edit
       export INSTALL="$HOME"     # default autotools' `make install` to install built binaries to "$HOME/usr/local/bin" ...
