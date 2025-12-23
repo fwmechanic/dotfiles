@@ -54,6 +54,65 @@ catpath() { [[ -d "$1" ]] && ! LC_ALL="" LANG="en_US.UTF-8" grep -qP '(\A|:)\Q'"
 
 catpath ~/my/repos/shell       # [ -d ~/my/repos/shell ]   && PATH=$PATH:~/my/repos/shell
 
+chk_kb_file() {
+   # Only run this check once per shell session
+   if [ -z "$_KB_DEFAULT_CHECK_DONE" ]; then
+       _KB_DEFAULT_CHECK_DONE=1
+
+       local KB_FILE=/etc/default/keyboard
+
+       if [ -r "$KB_FILE" ]; then
+           local kb_model_ok=false
+           local kb_layout_ok=false
+           local kb_opts_ctrl=false
+           local kb_opts_numpad=false
+
+           # XKBMODEL should at least contain pc105
+           if grep -q '^XKBMODEL="pc105"' "$KB_FILE"; then
+               kb_model_ok=true
+           fi
+
+           # XKBMODEL should at least contain pc105
+           if grep -q '^XKBLAYOUT="us"' "$KB_FILE"; then
+               kb_layout_ok=true
+           fi
+
+           # XKBOPTIONS should at least contain ctrl:nocaps and numpad:microsoft
+           if grep -Eq '^XKBOPTIONS="[^"]*ctrl:nocaps[^"]*"' "$KB_FILE"; then
+               kb_opts_ctrl=true
+           fi
+           if grep -Eq '^XKBOPTIONS="[^"]*numpad:microsoft[^"]*"' "$KB_FILE"; then
+               kb_opts_numpad=true
+           fi
+
+           if [ "$kb_model_ok" != true ] || [ "$kb_opts_ctrl" != true ] || [ "$kb_opts_numpad" != true ]; then
+               echo
+               echo "WARNING: /etc/default/keyboard does not yet have the recommended XKB settings."
+               echo "Current relevant lines:"
+               grep -E '^(XKBMODEL|XKBLAYOUT|XKBOPTIONS)=' "$KB_FILE" || echo "  (none)"
+               echo
+               echo "To set them, run:"
+               echo "  sudo nano /etc/default/keyboard"
+               echo "and ensure you have at least:"
+               echo '  XKBMODEL="pc105"'
+               echo '  XKBLAYOUT="us"'
+               echo '  XKBOPTIONS="ctrl:nocaps,numpad:microsoft"'
+               echo
+               echo "Then apply the changes with:"
+               echo "  sudo dpkg-reconfigure keyboard-configuration"
+               echo "  sudo setupcon    # optional, for the console"
+               echo
+           fi
+       else
+           echo
+           echo "WARNING: /etc/default/keyboard not found or not readable."
+           echo "On Debian-/Ubuntu-based systems you can create/adjust it with:"
+           echo "  sudo dpkg-reconfigure keyboard-configuration"
+           echo
+       fi
+   fi
+   }
+
 case "$(uname -s)" in
    Darwin)
       echo 'Mac OS X !!!'
@@ -77,7 +136,8 @@ case "$(uname -s)" in
       catpath ~/.local/bin              # python3 (ubu) seems to like to drop stuff here...
       catpath ~/.yarn/bin
 
-      >/dev/null command -v setxkbmap && setxkbmap -layout us -option ctrl:nocaps -option numpad:microsoft
+      chk_kb_file
+
       >/dev/null command -v namei && pathperm() { if [ "$#" -ge "1" ] ; then namei -l "$@" ; fi ; }  # http://serverfault.com/a/639215
       >/dev/null command -v ulimit && ulimit -c unlimited  # any-sized core files created
 
