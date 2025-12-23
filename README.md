@@ -20,7 +20,7 @@ chezmoi-managed dotfiles.
    If restoring from a passphrase-encrypted backup:
    ```bash
    mkdir -p ~/.config/chezmoi
-   age -d -o ~/.config/chezmoi/key.txt /path/to/key.txt.age
+   age -d -o ~/.config/chezmoi/key.txt ~/downloads/key.txt.age
    chmod 600 ~/.config/chezmoi/key.txt
    ```
 
@@ -36,12 +36,14 @@ chezmoi-managed dotfiles.
    bash -l
    ```
 
+6. fixup remote to use ssh:
+   ```bash
+   chezmoi cd  # OPENS A NEW SHELL
+   chezmoi git -- remote set-url origin git@github-fwmechanic:fwmechanic/dotfiles.git
+   ```
+
 ## Day-to-day usage
 
-```bash
-chezmoi edit ~/.bash_aliases   # edit a managed file
-chezmoi diff                   # see pending changes
-chezmoi apply                  # apply changes to home directory
-chezmoi cd                     # cd into source directory
-chezmoi git status             # run git commands in source repo
-```
+https://www.chezmoi.io/user-guide/daily-operations/
+
+https://www.chezmoi.io/user-guide/frequently-asked-questions/usage/
