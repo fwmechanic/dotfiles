@@ -363,9 +363,10 @@ sysd-sync-user() {
 # Uses a subshell so env changes don't leak to your session.
 claude() (
     unset ANTHROPIC_API_KEY ANTHROPIC_API_URL ANTHROPIC_API_KEY_FILE
-    echo "ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY ANTHROPIC_API_URL=$ANTHROPIC_API_URL ANTHROPIC_API_KEY_FILE=$ANTHROPIC_API_KEY_FILE"
-    command claude "$@"
-  )
+    export BROWSER="/usr/bin/google-chrome-stable"
+    echo "ANTHROPIC_API_KEY=$ANTHROPIC_API_KEY ANTHROPIC_API_URL=$ANTHROPIC_API_URL ANTHROPIC_API_KEY_FILE=$ANTHROPIC_API_KEY_FILE BROWSER=$BROWSER"
+    command claude --model 'claude-opus-4-6[1m]' --effort max "$@"
+)
 
 # Force API-mode explicitly
 claude-api() {

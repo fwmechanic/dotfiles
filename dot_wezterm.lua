@@ -57,6 +57,10 @@ return {
     { event = { Down = { streak = 1, button = 'Middle' }}, mods = 'NONE', action = act.PasteFrom 'PrimarySelection' },
 
     -- Click to open hyperlinks
-    { event = { Up = { streak = 1, button = 'Left' }}, mods = 'CTRL', action = act.OpenLinkAtMouseCursor, mouse_reporting = true },
-  }
+    { event = { Up = { streak = 1, button = 'Left' }}, mods = 'CTRL', action = act.OpenLinkAtMouseCursor },
+  },
+
+  keys = {
+    {key="Enter", mods="SHIFT", action=act{SendString="\x1b\r"}},
+  },
 }
