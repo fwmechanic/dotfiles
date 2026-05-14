@@ -1,0 +1,59 @@
+[user]
+	email = fwmechanic@gmail.com
+	name = Kevin Goodwin
+
+[core]
+	excludesfile = ~/gitignore_global
+	pager = tr -d '\\r' | less -REX
+
+[init]
+	defaultBranch = main
+
+[push]
+	default = simple
+[pull]
+	rebase = true
+	ff = only
+[merge]
+	conflictstyle = diff3
+	ff = only
+	tool = p4merge
+[diff]
+	tool = p4merge
+[rerere]
+	enabled = true
+
+[gui]
+	diffopts = -w
+
+[alias]
+	st = status --short --branch
+	stall = status --short --show-stash --ignored
+	co = checkout
+	ci = commit
+	wt = worktree
+	wtl = worktree list
+	br = branch
+	brv = branch -vv
+	indexonly = stash save --keep-index --include-untracked
+	pullover = reset --hard @{upstream}
+	trackedfiles = ls-tree -r HEAD --name-only
+	l1 = "!f() { git log -n ${1:-10} --oneline --decorate --graph; }; f"
+	l1b = "!f() { git log --oneline --decorate --graph "$@"; }; f"
+	log1 = "!f() { git log -n ${1:-10} --oneline --decorate --graph --all; }; f"
+	brt = !git branch -a --format=\"%(committerdate:format:%Y%m%d_%H%M%S) %(refname:short)\" | sort -r
+	brdelete = !git branch -r | grep -v \"HEAD\\|main\" | sed \"s/origin\\///\" | fzf -m | xargs -I {} git push origin --delete {}
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[includeIf "gitdir:~/devicepros/"]
+	path = ~/devicepros/.gitconfig
+
+[url "git@github-fwmechanic:fwmechanic/"]
+	insteadOf = git@github.com:fwmechanic/
+	insteadOf = ssh://git@github.com/fwmechanic/
+	insteadOf = https://github.com/fwmechanic/
